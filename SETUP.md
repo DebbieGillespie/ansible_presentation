@@ -1,0 +1,5 @@
+- Clone the repo
+- cd into queue_presentation/reveal.js
+- `npm install`
+- `grunt serve`
+- Point a browser to [http://localhost:8000](http://localhost:8000)
