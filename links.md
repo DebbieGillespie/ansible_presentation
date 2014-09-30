@@ -1,0 +1,5 @@
+- [Presentation](http://localhost:8000)
+- [Queue Client](http://z.umn.edu/queue)
+- [Signage Client](http://z.umn.edu/signage)
+- [Salesforce](https://umn-student--martin.cs15.my.salesforce.com/console)
+  - Ian's already logged in and has the credentials

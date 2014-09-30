@@ -25,7 +25,7 @@ Here's how we understood the project at the beginning:
 2. Post data to SalesForce API
 3. Receive updates via SalesForce over HTTP
 
-Note: And that was pretty much what we knew.
+Note: And that was pretty much what we knew. And, as you saw, that pretty much looks like what the app does.
 
 
 ### Let's get Agile!
@@ -78,7 +78,7 @@ But we didn't do that. Instead we kept working and as the complexity grew we tri
 
 
 # Lesson 2:
-## Suprises = Regroup
+## Surprises = Regroup
 
 Note:
 Since our initial understanding of the system turned out to be flawed, any one of these surprises should have led to us to say, "Wait, let's regroup and figure out what this system is." That's a responsible response to change, which is a core Agile tenet.
@@ -94,13 +94,13 @@ Earlier we mentioned that this is made up of 6 systems. Let's quickly describe t
 ## Lesson 3: Stub what you don't control
 
 Note:
-This is a perfect case for using some dummy services or stubbed out responses. SalesForce hasn't implemented the endpoint yet? No problem. Away from the internet, no problem.
+This is a perfect case for using some dummy services or stubbed out responses. SalesForce hasn't implemented the endpoint yet? No problem. Away from the internet? No problem. Stubs isolate you from these dependencies that are out of your control.
 
 
 ## Lesson 3.1: But stubs will destroy you
 
 Note:
-And then you try testing against the real service and your app won't run. Your stub has something quoted that the service doesn't. The key names are slightly different. Whatever the reason, you have to have tests that exercise your app against both stubs and real services. We didn't and eventually fell into a paranoia of not testing any code until we saw it run in Staging. Then we hoped that the services wouldn't change unexpectedly.
+And then you try testing against the real service and your app won't run. Your stub has something quoted that the service doesn't. The key names are slightly different. Whatever the reason, you have to have tests that exercise your app against both stubs and real services. We didn't and eventually fell into a paranoia of not trusting any code until we saw it run in Staging. Then we hoped that the services wouldn't change unexpectedly.
 
 
 ### Onwards!
@@ -110,7 +110,24 @@ Note:
 After fighting our fires and unwapping all the hidden complexity, we ended up with an app that actually worked pretty well. It took us longer than it should have, but at least it worked. Now to show it off.
 
 
-## Lesson 4: Works fine on my machine
+## Lesson 4: Works fine on my machine isn't working
 
 Note:
-And, of course, it didn't deploy. We almost always get the order of development wrong. In our mind it's a list [Test, Develop, Deploy]. But that means we always save the hardest and most valuable step for last. Which do you think your customer would prefer?
+And, of course, it didn't deploy. We almost always get the order of development wrong. In our mind it's a list [Test, Develop, Deploy]. But that means we always save the hardest and most valuable step for last. Which do you think your customer would prefer? A deployed app that's missing a feature, or a feature-rich app that only runs on your laptop? 
+
+And I should note that I'm not saying "Deploy to a staging instance first." I'm saying "Deploying to production should be the **first** thing you do." Production SalesForce had a bunch of security requirements that caused us headaches when deploying.
+
+
+### Onwards!
+#### Students, Students Everywhere
+
+Note:
+So, fires fought and we get this queue system deployed. There are bugs. Some normal, some weird. Then the first week of school arrives and about 800 students visit One Stop a day.
+
+
+## Lesson 5: Browsers still matter, sadly
+
+Note:
+And the signage blows up. Not consistently, not predictably. But, once in a while it takes 30-60 seconds for the 'Now Calling' text to show up. Why? Because IE leaks memory like a stuck memory pig, apparently. Even the fancy newest version that's a totally nice browser in all other respects. And, because of the tech that runs the Signage, IE is the only browser available.
+
+As good as browsers currently are, they still matter. And if you have to use a specific one, then make sure it performs in a production environment.
