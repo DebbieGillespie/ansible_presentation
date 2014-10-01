@@ -7,19 +7,16 @@ Note:
 We'll start off with a demo. Seeing things in action will make our discussion a little more clear, hopefully.
 
 
+### Play Along!
 #### http://z.umn.edu/queue
-
-Note:
-After people have the URL, switch to a browser that is running the Signage. Call people up, if possible.
-
-
-### Simple!
-
-Note:
-There's not much there, right? You put in your ID or name, you show up on that list of people waiting and then we call you up.
+#### http://z.umn.edu/signage
+##### (Or Do Both)
 
 
-Here's how we understood the project at the beginning:
+## That's What We Thought, Too
+
+
+## Here's What We Thought the Project Was
 
 1. Read a card swipe
 2. Post data to SalesForce API
@@ -28,50 +25,50 @@ Here's how we understood the project at the beginning:
 Note: And that was pretty much what we knew. And, as you saw, that pretty much looks like what the app does.
 
 
-### Let's get Agile!
+## Onwards!
+### Let's Code
 
 Note:
-Being a quick-moving Agile team we hopped in and started writing code. Work began on an Ember application that would serve as the kiosk.
+- We started with an Ember app running in the Kiosk
+- Simple solution for a simple problem
+- Would satify the first two of the requirements
 
 
-### Maybe less Agile!
+## Or, you know, not.
 
 Note:
-Think back to that demo. How much complexity did you see? Did it look like 6 different systems communicating over 3 different protocols? Because that's what it is.
+- This Ember app could handle card swipes and name entry, but
+
+
+As we began to discuss, we found we also needed ways to:
+
+- Show the Queue to people waiting<!-- .element: class="fragment" data-fragment-index="1" -->
+- Get preferred names from SalesForce<!-- .element: class="fragment" data-fragment-index="2" -->
+- Maintain our oAuth credentials with SalesForce<!-- .element: class="fragment" data-fragment-index="3" -->
+- Release new versions of the Ember applications<!-- .element: class="fragment" data-fragment-index="4" -->
+- Tell the Kiosks when One Stop is closed<!-- .element: class="fragment" data-fragment-index="5" -->
+- Prevent malicious users from running their own kiosks<!-- .element: class="fragment" data-fragment-index="6" -->
+- Get configuration data quickly from SalesForce<!-- .element: class="fragment" data-fragment-index="7" -->
+- Receive updates about students being called to the desk<!-- .element: class="fragment" data-fragment-index="8" -->
+
+Note:
+- Think back to that demo.
+- Did it look like 6 different systems, 3 languages and 3 protocols?
 
 
 # Lesson 1
 ## NoDUF isn't always better than BDUF
 
 Note:
-There's a misapprehension about Agile that teams shouldn't design. Instead they should 'discover as they go'. And, as a reaction to huge, tedious waterfall designs, it seems logical to think that Agile teams shouldn't design.
-
-But here, by jumping into coding, we set ourselves up for endless rewrites.
-
-What could we have done differently? I think if we'd spent 3 days paper protyping the system and its interactions, we would have revealed its complexities and we would have ended up with a better design.
-
-
-## Our Final App Design
-
-- One Ember app as the Kiosk
-- One Ember app displaying the queue
-- PeopleSoft, for preferred name lookups
-- SalesForce, which
-  - we query to get configuration details
-  - we POST student data to, adding students to the queue
-  - POSTS to us when a student is called
-- A Rails app that 
-  - serves the Ember apps
-  - manages communication with SalesForce
-  - manages communication with PeopleSoft
-  - mantains oAuth credentials with SalesForce
-- Faye, a web-socket based pub/sub libary
-  - Pushes queue updates to the Ember app
-  - Channel for managing the Ember apps (releasing new versions, reloading, etc.)
+- Agile stereotype of 'not desgining'
+- Instead, concern should be 'over desgining'
+- You need to understand the problem
+- That can be simpler before coding
+- In future we plan on spending 3-5 days doing paper prototyping
 
 
-### Onwards!
-#### To Complexity and Beyond
+## Onwards!
+### To Complexity and Beyond
 
 Note:
 But we didn't do that. Instead we kept working and as the complexity grew we tried to tackle it quickly or ignored it. Pretty classic 'firefighting' mentality emerged quickly.
@@ -84,50 +81,93 @@ Note:
 Since our initial understanding of the system turned out to be flawed, any one of these surprises should have led to us to say, "Wait, let's regroup and figure out what this system is." That's a responsible response to change, which is a core Agile tenet.
 
 
-### Onwards!
-#### External Services and Integration
+## Onwards!
+### External Services and Integration
+
+
+As we worked, our systems grew. We had to handle communication between:
+
+- Ember Kiosk app<!-- .element: class="fragment" data-fragment-index="1"-->
+- Ember Signage app<!-- .element: class="fragment" data-fragment-index="2" -->
+- Rails for HTTP services<!-- .element: class="fragment" data-fragment-index="3" -->
+- PeopleSoft for names<!-- .element: class="fragment" data-fragment-index="4" -->
+- SalesForce for everything else<!-- .element: class="fragment" data-fragment-index="5" -->
+
+
+# Lesson 3:
+## Stub what you don't control
 
 Note:
-Earlier we mentioned that this is made up of 6 systems. Let's quickly describe the 5 of those we knew about at this time: A Ember app for the kiosk, another Ember app for the Signage, a Rails app and then SalesForce and Peoplesoft. PeopleSoft knew the students' names and SalesForce handled all the CRM stuff.
+- Difficult communicating with all those services
+- SalesForce security particularly tricky
+- Especially when not all development is done
+- SalesForce endpoints were changing frequently
+- Stubs isolate you from what you can't control, letting you develop
 
 
-## Lesson 3: Stub what you don't control
-
-Note:
-This is a perfect case for using some dummy services or stubbed out responses. SalesForce hasn't implemented the endpoint yet? No problem. Away from the internet? No problem. Stubs isolate you from these dependencies that are out of your control.
-
-
-## Lesson 3.1: But stubs will destroy you
-
-Note:
-And then you try testing against the real service and your app won't run. Your stub has something quoted that the service doesn't. The key names are slightly different. Whatever the reason, you have to have tests that exercise your app against both stubs and real services. We didn't and eventually fell into a paranoia of not trusting any code until we saw it run in Staging. Then we hoped that the services wouldn't change unexpectedly.
-
-
-### Onwards!
-#### Let's Deploy This Stuff
+# Lesson 3.1:
+## But stubs will destroy you
 
 Note:
-After fighting our fires and unwapping all the hidden complexity, we ended up with an app that actually worked pretty well. It took us longer than it should have, but at least it worked. Now to show it off.
+- Your stubs will always be flawed
+- Code that works against a stub will break against the real service
+- Test suite needs to run against both
+- Otherwise you just end up hoping, or hot patching your staging environment
 
 
-## Lesson 4: Works fine on my machine isn't working
+## Onwards!
+### Let's Deploy This Stuff
+
+
+### What is of more value?
+
+1. A deployed app that's missing a feature<!-- .element: class="fragment" data-fragment-index="1"-->
+2. A great app that only runs on your laptop<!-- .element: class="fragment" data-fragment-index="2"-->
 
 Note:
-And, of course, it didn't deploy. We almost always get the order of development wrong. In our mind it's a list [Test, Develop, Deploy]. But that means we always save the hardest and most valuable step for last. Which do you think your customer would prefer? A deployed app that's missing a feature, or a feature-rich app that only runs on your laptop? 
+- We, of course, had option 2.
 
-And I should note that I'm not saying "Deploy to a staging instance first." I'm saying "Deploying to production should be the **first** thing you do." Production SalesForce had a bunch of security requirements that caused us headaches when deploying.
+
+# Lesson 4:
+## Deploy First
+(AKA: 'Works fine on my machine' isn't working)
+
+Note:
+- Our mental map of a project is: Design, Develop, Deploy
+- This puts the most important, and hardest task at the end
+- Deploying to 'staging' isn't deploying
+- Deploying to a production environment should be the first task, not the last
 
 
 ### Onwards!
 #### Students, Students Everywhere
 
 Note:
-So, fires fought and we get this queue system deployed. There are bugs. Some normal, some weird. Then the first week of school arrives and about 800 students visit One Stop a day.
+- Without students, the queue doesn't serve much purpose
+- We deployed in summer and things went well
+- 800 students a day visit One Stop when school starts
+- But if it works for 20 students a day, 800 has to be fine.
+- Right?
 
 
-## Lesson 5: Browsers still matter, sadly
+# Lesson 5:
+## Browsers still matter, sadly
 
 Note:
-And the signage blows up. Not consistently, not predictably. But, once in a while it takes 30-60 seconds for the 'Now Calling' text to show up. Why? Because IE leaks memory like a stuck memory pig, apparently. Even the fancy newest version that's a totally nice browser in all other respects. And, because of the tech that runs the Signage, IE is the only browser available.
+- As students return, the signage gets super laggy
+- Not predictable, not consistent
+- IE leaks memory like a stuck RAM pig
+- Yes, even IE11.
+- No, we can't use any other browser
+- Identify technology constraints, test them specifically.
 
-As good as browsers currently are, they still matter. And if you have to use a specific one, then make sure it performs in a production environment.
+
+# Lesson 6:
+## Even flawed projects can be awesome
+
+Note:
+- This app is great
+- Taught us a bunch about Ember, web-sockets, oAuth and more
+- Replaced a $50,000 per/year system
+- Saves One Stop staff a ton of time and hassle
+- Can be extended in a ton of ways
