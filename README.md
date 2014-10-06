@@ -13,6 +13,9 @@ We'll start off with a demo. Seeing things in action will make our discussion a 
 ##### (Or Do Both)
 
 
+## Simple
+
+
 ## That's What We Thought, Too
 
 
@@ -42,14 +45,14 @@ Note:
 
 As we began to discuss, we found we also needed ways to:
 
-- Show the Queue to people waiting<!-- .element: class="fragment" data-fragment-index="1" -->
-- Get preferred names from SalesForce<!-- .element: class="fragment" data-fragment-index="2" -->
-- Maintain our oAuth credentials with SalesForce<!-- .element: class="fragment" data-fragment-index="3" -->
-- Release new versions of the Ember applications<!-- .element: class="fragment" data-fragment-index="4" -->
-- Tell the Kiosks when One Stop is closed<!-- .element: class="fragment" data-fragment-index="5" -->
-- Prevent malicious users from running their own kiosks<!-- .element: class="fragment" data-fragment-index="6" -->
-- Get configuration data quickly from SalesForce<!-- .element: class="fragment" data-fragment-index="7" -->
-- Receive updates about students being called to the desk<!-- .element: class="fragment" data-fragment-index="8" -->
+- Show the Queue to people waiting
+- Get preferred names from SalesForce
+- Maintain our oAuth credentials with SalesForce
+- Release new versions of the Ember applications
+- Tell the Kiosks when One Stop is closed
+- Prevent malicious users from running their own kiosks
+- Get configuration data quickly from SalesForce
+- Receive updates about students being called to the desk
 
 Note:
 - Think back to that demo.
@@ -87,11 +90,11 @@ Since our initial understanding of the system turned out to be flawed, any one o
 
 As we worked, our systems grew. We had to handle communication between:
 
-- Ember Kiosk app<!-- .element: class="fragment" data-fragment-index="1"-->
-- Ember Signage app<!-- .element: class="fragment" data-fragment-index="2" -->
-- Rails for HTTP services<!-- .element: class="fragment" data-fragment-index="3" -->
-- PeopleSoft for names<!-- .element: class="fragment" data-fragment-index="4" -->
-- SalesForce for everything else<!-- .element: class="fragment" data-fragment-index="5" -->
+- Ember Kiosk app
+- Ember Signage app
+- Rails for HTTP services
+- PeopleSoft for names
+- SalesForce for everything else
 
 
 # Lesson 3:
@@ -121,8 +124,8 @@ Note:
 
 ### What is of more value?
 
-1. A deployed app that's missing a feature<!-- .element: class="fragment" data-fragment-index="1"-->
-2. A great app that only runs on your laptop<!-- .element: class="fragment" data-fragment-index="2"-->
+1. A deployed app that's missing a feature
+2. A great app that only runs on your laptop
 
 Note:
 - We, of course, had option 2.
